@@ -1,0 +1,37 @@
+<!--<div class="row justify-content-center" style="background-color: lightgrey; overflow-y: auto; position: absolute; width: 100%;">
+    <div class="col-8">
+        <div *ngIf="chat">
+            <h2><span>Chat</span> {{chat.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span>Fecha Creacion</span></dt>
+                <dd>
+                    <span>{{chat.fechaCreacion}}</span>
+                </dd>
+                <dt><span>Ultima Vez Visto</span></dt>
+                <dd>
+                    <span>{{chat.ultimaVezVisto}}</span>
+                </dd>
+                <dt><span>Usuario</span></dt>
+                <dd>
+                    <div *ngIf="chat.usuario">
+                        <a [routerLink]="['/usuario', chat.usuario?.id, 'view']">{{chat.usuario?.id}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/chat', chat.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>-->

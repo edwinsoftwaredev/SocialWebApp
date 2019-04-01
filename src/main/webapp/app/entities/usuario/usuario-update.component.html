@@ -1,0 +1,98 @@
+<div class="row justify-content-center" style="background-color: lightgrey; overflow-y: auto; position: absolute; width: 100%;">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+            <h2 id="jhi-usuario-heading">Create or edit a Usuario</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!usuario.id">
+                    <label for="id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id"
+                        [(ngModel)]="usuario.id" readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_usuario">Usuario</label>
+                    <input type="text" class="form-control" name="usuario" id="field_usuario"
+                        [(ngModel)]="usuario.usuario" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_primerNombre">Primer Nombre</label>
+                    <input type="text" class="form-control" name="primerNombre" id="field_primerNombre"
+                        [(ngModel)]="usuario.primerNombre" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_segundoNombre">Segundo Nombre</label>
+                    <input type="text" class="form-control" name="segundoNombre" id="field_segundoNombre"
+                        [(ngModel)]="usuario.segundoNombre" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_primerApellido">Primer Apellido</label>
+                    <input type="text" class="form-control" name="primerApellido" id="field_primerApellido"
+                        [(ngModel)]="usuario.primerApellido" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_segundoApellido">Segundo Apellido</label>
+                    <input type="text" class="form-control" name="segundoApellido" id="field_segundoApellido"
+                        [(ngModel)]="usuario.segundoApellido" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_email">Email</label>
+                    <input type="text" class="form-control" name="email" id="field_email"
+                        [(ngModel)]="usuario.email" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_fechaNacimiento">Fecha Nacimiento</label>
+                    <div class="input-group">
+                        <input id="field_fechaNacimiento" type="text" class="form-control" name="fechaNacimiento" ngbDatepicker  #fechaNacimientoDp="ngbDatepicker" [(ngModel)]="usuario.fechaNacimiento"
+                        />
+                        <span class="input-group-append">
+                            <button type="button" class="btn btn-secondary" (click)="fechaNacimientoDp.toggle()"><fa-icon [icon]="'calendar-alt'"></fa-icon></button>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_fechaRegistro">Fecha Registro</label>
+                    <div class="input-group">
+                        <input id="field_fechaRegistro" type="text" class="form-control" name="fechaRegistro" ngbDatepicker  #fechaRegistroDp="ngbDatepicker" [(ngModel)]="usuario.fechaRegistro"
+                        />
+                        <span class="input-group-append">
+                            <button type="button" class="btn btn-secondary" (click)="fechaRegistroDp.toggle()"><fa-icon [icon]="'calendar-alt'"></fa-icon></button>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_profilePic">Profile Pic</label>
+                    <div>
+                        <div *ngIf="usuario.profilePic" class="form-text text-danger clearfix">
+                            <a class="pull-left" (click)="openFile(usuario.profilePicContentType, usuario.profilePic)">open</a><br>
+                            <span class="pull-left">{{usuario.profilePicContentType}}, {{byteSize(usuario.profilePic)}}</span>
+                            <button type="button" (click)="usuario.profilePic=null;usuario.profilePicContentType=null;"
+                                    class="btn btn-secondary btn-xs pull-right">
+                                <fa-icon [icon]="'times'"></fa-icon>
+                            </button>
+                        </div>
+                        <input type="file" id="file_profilePic" (change)="setFileData($event, usuario, 'profilePic', false)"/>
+                    </div>
+                    <input type="hidden" class="form-control" name="profilePic" id="field_profilePic"
+                        [(ngModel)]="usuario.profilePic" />
+                    <input type="hidden" class="form-control" name="profilePicContentType" id="field_profilePicContentType"
+                        [(ngModel)]="usuario.profilePicContentType" />
+                </div>
+
+                <div class="form-group">
+                    <label for="field_actividad">Actividad</label>
+                    <select class="form-control" id="field_actividad" multiple name="actividad" [(ngModel)]="usuario.actividads">
+                        <option [ngValue]="getSelected(usuario.actividads, actividadOption)" *ngFor="let actividadOption of actividads; trackBy: trackActividadById">{{actividadOption.id}}</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span>Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span>Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,39 @@
+<div class="row justify-content-center" style="background-color: lightgrey; overflow-y: auto; position: absolute; width: 100%;">
+    <div class="col-8">
+        <div *ngIf="like">
+            <h2><span>Like</span> {{like.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span>Fecha Like</span></dt>
+                <dd>
+                    <span>{{like.fechaLike}}</span>
+                </dd>
+                <dt><span>Post</span></dt>
+                <dd>
+                    <div *ngIf="like.post">
+                        <a [routerLink]="['/post', like.post?.id, 'view']">{{like.post?.id}}</a>
+                    </div>
+                </dd>
+                <dt><span>Usuario</span></dt>
+                <dd>
+                    <div *ngIf="like.usuarioLike">
+                        <a [routerLink]="['/usuario', like.usuarioLike?.id, 'view']">{{like.usuarioLike?.id}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/like', like.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

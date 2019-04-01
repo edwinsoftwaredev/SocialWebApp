@@ -1,0 +1,47 @@
+<div style="padding: 7px;" *ngIf="authenticated">
+    <mat-card style="background-color: whitesmoke">
+        <div class="profilePic-container" *ngIf="usuario !== null">
+            <div class="profilePicContainer" *ngIf="!!usuario.profilePicContentType" style="border-radius: 50%; background-size: cover; background-position-x: center; background-position-y: center; height: 180px; width: 180px; margin: 0px auto; border: 4px solid #607D8B;" [ngStyle]="{'background-image': 'url(' + picUrl + ')'}" >
+                <div *ngIf="usuario.usuario === authenticatedUser.usuario" style="height: 180px; width: 180px; border-radius: 50%; margin-top: -4px; margin-left: -4px; overflow: hidden;">
+                    <div (click)="editarPerfil()" class="editProfileContainer" style="background-color: #26A69A; cursor: pointer; height: 180px; width: 180px; border-radius: 50%; margin-left: -4px;">
+                        <fa-icon matTooltip="Editar Perfil" style="color: white; font-size: 20px; margin-left: 84px;" [icon]="['fas', 'user-edit']"></fa-icon>
+                    </div>
+                </div>
+            </div>
+            <div class="profilePicContainer" *ngIf="!usuario.profilePicContentType" mat-card-avatar style="background-size: cover; background-position-x: center; background-position-y: center; height: 180px; width: 180px; margin: 0px auto; border: 4px solid whitesmoke; background-image: url('./../../content/images/default-profile-pic.jpg')">
+                <div *ngIf="usuario.usuario === authenticatedUser.usuario" style="height: 180px; width: 180px; border-radius: 50%; margin-top: -4px; margin-left: -4px; overflow: hidden;">
+                    <div (click)="editarPerfil()" class="editProfileContainer" style="background-color: #bbcedd; cursor: pointer; height: 180px; width: 180px; border-radius: 50%; margin-left: -4px;">
+                        <fa-icon matTooltip="Editar Perfil" style="color: white; font-size: 20px; margin-left: 84px;" [icon]="['fas', 'user-edit']"></fa-icon>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br/>
+        <mat-card>
+            <mat-card-title style="text-align: center; font-size: 12pt;">{{usuario.primerNombre}} {{usuario.primerApellido}}</mat-card-title>
+        </mat-card>
+    </mat-card>
+    <br/>
+    <mat-card *ngIf="usuario.usuario === authenticatedUser.usuario" style="background-color: whitesmoke; display: flex;">
+        <button (click)="logout()" mat-stroked-button style="margin: auto auto;">Cerrar Sesión</button>
+    </mat-card>
+    <mat-card *ngIf="usuario.usuario !== authenticatedUser.usuario" style="background-color: whitesmoke; display: flex;">
+        <button style="background-color: #607D8B; color: white; margin: auto auto;" mat-stroked-button disabled *ngIf="sonAmigos && usuario.usuario !== authenticatedUser.usuario">
+            <fa-icon [icon]="['fas', 'user-friends']"></fa-icon>
+            Son Amigos
+        </button>
+        <button style="background-color: #607D8B; color: white; margin: auto auto;" mat-stroked-button disabled *ngIf="usuarioVisitorEnvioSolicitud && usuario.usuario !== authenticatedUser.usuario">
+            <fa-icon [icon]="['fas', 'pause-circle']"></fa-icon>
+            Solicitud Enviada
+        </button>
+        <button style="background-color: #607D8B; color: white; margin: auto auto;" (click)="aceptarSolicitudBusqueda($event)" mat-stroked-button *ngIf="usuarioVisitedEnvioSolicitud && usuario.usuario !== authenticatedUser.usuario">
+            <fa-icon [icon]="['fas', 'exclamation-circle']"></fa-icon>
+            Aceptar Solicitud
+        </button>
+        <button style="background-color: #607D8B; color: white; margin: auto auto;" (click)="enviarSolicitudBusqueda($event)" mat-stroked-button *ngIf="(!sonAmigos && !usuarioVisitorEnvioSolicitud && !usuarioVisitedEnvioSolicitud) && usuario.usuario !== authenticatedUser.usuario">
+            <fa-icon [icon]="['fas', 'user-plus']"></fa-icon>
+            Enviar Solicitud
+        </button>
+    </mat-card>
+
+</div>

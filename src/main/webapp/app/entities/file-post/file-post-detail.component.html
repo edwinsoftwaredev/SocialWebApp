@@ -1,0 +1,36 @@
+<div class="row justify-content-center" style="background-color: lightgrey; overflow-y: auto; position: absolute; width: 100%;">
+    <div class="col-8">
+        <div *ngIf="filePost">
+            <h2><span>File Post</span> {{filePost.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span>File</span></dt>
+                <dd>
+                    <div *ngIf="filePost.file">
+                        <a (click)="openFile(filePost.fileContentType, filePost.file)">open</a>
+                        {{filePost.fileContentType}}, {{byteSize(filePost.file)}}
+                    </div>
+                </dd>
+                <dt><span>Post</span></dt>
+                <dd>
+                    <div *ngIf="filePost.post">
+                        <a [routerLink]="['/post', filePost.post?.id, 'view']">{{filePost.post?.id}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/file-post', filePost.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

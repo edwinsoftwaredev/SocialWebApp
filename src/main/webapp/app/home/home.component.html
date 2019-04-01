@@ -1,0 +1,168 @@
+<div class="container-fluid" style="background: linear-gradient(180deg, rgba(96,125,139,1) 40%, rgba(11,18,19,0.8827906162464986) 100%); overflow-y: auto; position: absolute; width: 100%;">
+
+    <div class="card jh-card" style="background-color: transparent;">
+        <div class="row">
+            <div class="col-md-3" style="text-align: center;">
+                <span class="hipster img-fluid rounded"></span>
+            </div>
+            <div class="col-md-9">
+                <mat-card style="background-color: #557a8c; color: white;">
+                    <h1 class="display-4" style="font-weight: bolder;">Social</h1>
+                    <!--<p class="lead">This is your homepage</p>-->
+
+                    <h5>
+                        Social es un proyecto de red social que permite:
+                    </h5>
+
+                    <ul>
+                        <li>
+                            Crear publicaciones que otros usuarios de Social podr&aacute;n ver y reaccionar.
+                        </li>
+                        <li>
+                            Agregar a otros usuario de Social, mediante solicitudes, como amigos de un perfil.
+                        </li>
+                        <li>
+                            Envio de mensajes y notificaciones a otros usuario de Social.
+                        </li>
+                        <li>
+                            Ver las publicaciones de amigos como de otros usuarios de Social.
+                        </li>
+                    </ul>
+
+                    <h5>Social App</h5>
+                    <ul>
+                        <li>Android: ----------</li>
+                    </ul>
+
+                    <br/>
+                    <br/>
+
+                    <div *ngIf="!isAuthenticated()">
+                        <h6>Para comenzar usa el bot&oacute;n "Registrarte" o "Iniciar Sesi&oacute;n"</h6>
+                    </div>
+                </mat-card>
+
+                <br/>
+                <br/>
+
+                <mat-card style="background-color: #557a8c; color: white; display: inline-block; width: 100%;">
+                    <h5>Este proyecto utiliza las siguientes tecnolog&iacute;as:</h5>
+                    <div style="display: inline-block;">
+                        <div style="float: left;">
+                            <ul style="margin-right: 25px;">
+                                <li>
+                                    <span>JHipster</span>
+                                    <ul>
+                                        <li>
+                                            <span>Back-end</span>
+                                            <ul>
+                                                <li>Java</li>
+                                                <li>Spring Boot</li>
+                                                <li>Spring MVC REST</li>
+                                                <li>Spring Security</li>
+                                                <li>Spring DATA JPA</li>
+                                                <li>WebSockets</li>
+                                                <li>Liquibase</li>
+                                                <li>MySQL</li>
+                                                <li>Gradle</li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <span>Front-end</span>
+                                            <ul>
+                                                <li>Angular</li>
+                                                <li>Angular Material</li>
+                                                <li>HTML5</li>
+                                                <li>Sass (CSS3)</li>
+                                                <li>Typescript</li>
+                                                <li>npm</li>
+                                                <li>Webpack</li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div style="float: left">
+                            <ul>
+                                <li>
+                                    <span>NativeScript</span>
+                                    <ul>
+                                        <li>
+                                            <span>Back-end</span>
+                                            <ul>
+                                                <li>Firebase (FCM)</li>
+                                                <li>El anteriormente mencionado</li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <span>Front-end</span>
+                                            <ul>
+                                                <li>Angular</li>
+                                                <li>NativeScript Framework</li>
+                                                <li>Gradle</li>
+                                                <li>XML/HTML5</li>
+                                                <li>Sass (CSS3)</li>
+                                                <li>Typescript</li>
+                                                <li>npm</li>
+                                                <li>Webpack</li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div style="float: left">
+                            <ul>
+                                <li>
+                                    <span>Otras Tecnolog&iacute;as</span>
+                                    <ul>
+                                        <li>Heroku</li>
+                                        <li>GitHub</li>
+                                        <li>Trello</li>
+                                        <li>IntelliJ IDEA</li>
+                                        <li>MySQL Workbench</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </mat-card>
+
+
+                <!--<div [ngSwitch]="isAuthenticated()">
+                    <div class="alert alert-success" *ngSwitchCase="true">
+                <span id="home-logged-message" *ngIf="account"
+                > You are logged in as user "{{account.login}}". </span>
+                    </div>
+
+                    <div class="alert alert-warning" *ngSwitchCase="false">
+                        <span>If you want to </span>
+                        <a class="alert-link" (click)="login()">sign in</a><span>, you can try the default accounts:<br/>- Administrator (login="admin" and password="admin") <br/>- User (login="user" and password="user").</span>
+                    </div>
+                    <div class="alert alert-warning" *ngSwitchCase="false">
+                        <span>You don't have an account yet?</span>&nbsp;
+                        <a class="alert-link" routerLink="register">Register a new account</a>
+                    </div>
+                </div>-->
+
+               <!--<p>
+                    If you have any question on JHipster:
+                </p>
+
+                <ul>
+                    <li><a href="https://www.jhipster.tech/" target="_blank" rel="noopener">JHipster homepage</a></li>
+                    <li><a href="http://stackoverflow.com/tags/jhipster/info" target="_blank" rel="noopener">JHipster on Stack Overflow</a></li>
+                    <li><a href="https://github.com/jhipster/generator-jhipster/issues?state=open" target="_blank" rel="noopener">JHipster bug tracker</a></li>
+                    <li><a href="https://gitter.im/jhipster/generator-jhipster" target="_blank" rel="noopener">JHipster public chat room</a></li>
+                    <li><a href="https://twitter.com/java_hipster" target="_blank" rel="noopener">follow @java_hipster on Twitter</a></li>
+                </ul>
+
+                <p>
+                    <span>If you like JHipster, don't forget to give us a star on</span> <a href="https://github.com/jhipster/generator-jhipster" target="_blank" rel="noopener">GitHub</a>!
+                </p>-->
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,134 @@
+<div *jhiHasAnyAuthority="['ROLE_USER', 'ROLE_ADMIN']" style="background-color: lightgrey; overflow-y: auto; position: absolute; width: 100%;">
+  <form role="form" (ngSubmit)="saveProfile()" #profileForm="ngForm">
+      <mat-card class="principalContainer">
+          <mat-card-header>
+            <mat-card-title><h4>Escribe los datos de tu Perfil</h4></mat-card-title>
+          </mat-card-header>
+          <br/>
+          <mat-card-content>
+            <mat-card class="innerDataCards">
+              <mat-card-header>
+                <mat-card-title class="cardTitle">Tu Imagen de Perfil</mat-card-title>
+              </mat-card-header>
+              <mat-card-content>
+                <div class="profilePic-container">
+
+                    <div *ngIf="!!perfil.profilePic"
+                         mat-card-avatar
+                         class="hoverPic"
+                         [ngStyle]="{'background-image': 'url(' + profilePicUrl + ')'}"
+                         (click)="triggerLoadProfileImage()" matTooltip="Haz click para cambiar la imagen."
+                    >
+                    </div>
+
+                    <div *ngIf="!perfil.profilePic"
+                         class="hoverPic"
+                         mat-card-avatar
+                         style="background-image: url('./../../content/images/default-profile-pic.jpg');"
+                         (click)="triggerLoadProfileImage()" matTooltip="Haz click para cambiar la imagen."
+                    >
+                    </div>
+                    <!--<div class="profilePic">
+                        <img *ngIf="!!perfil.profilePic" [src]="profilePicUrl" width="180" (click)="triggerLoadProfileImage()" matTooltip="Haz click para cambiar la imagen. Para visializarla mejor, de lado de igual tamaño." style="margin: auto 0px;">
+                        <img *ngIf="!perfil.profilePic" src="./../../content/images/default-profile-pic.jpg" width="180" height="180" matTooltip="Haz click para cambiar la imagen. Para visializarla mejor, de lado de igual tamaño" (click)="triggerLoadProfileImage()">
+                    </div>-->
+                </div>
+              </mat-card-content>
+            </mat-card>
+            <br/>
+            <mat-card class="innerDataCards">
+              <mat-card-header>
+                <mat-card-title class="cardTitle">Tus datos Personales</mat-card-title>
+              </mat-card-header>
+              <mat-card-content>
+                <mat-form-field appearance="outline">
+                    <mat-label>Primer Nombre</mat-label>
+                    <input matInput type="text" name="firstName" id="firstName" minlength="1" maxlength="100" required
+                      pattern="^[A-Za-z]*$" #firstName="ngModel" [(ngModel)]="perfil.primerNombre">
+                    <div *ngIf="firstName.dirty && firstName.invalid">
+                      <mat-error *ngIf="firstName.hasError('minlength')">
+                        Tu primer nombre tiene que ser mayor de un carácter.
+                      </mat-error>
+                      <mat-error *ngIf="firstName.hasError('maxlength')">
+                        Tu primer nombre tiene que se menor a 100 caracteres.
+                      </mat-error>
+                      <mat-error *ngIf="firstName.hasError('pattern')">
+                        Tu primer nombre solo debe contener caracteres(A - Z o a - z).
+                      </mat-error>
+                      <mat-error *ngIf="firstName.hasError('required')">
+                        Tu primer nombre es requerido.
+                      </mat-error>
+                    </div>
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Segundo Nombre</mat-label>
+                    <input matInput type="text" name="secondName" id="secondName" #secondName="ngModel"
+                      [(ngModel)]="perfil.segundoNombre" maxlength="100" pattern="^[A-Za-z]*$">
+                    <div *ngIf="secondName.dirty && secondName.invalid">
+                      <mat-error *ngIf="secondName.hasError('maxlength')">
+                        Tu segundo nombre no debe ser mayor de 100 caracteres.
+                      </mat-error>
+                      <mat-error *ngIf="secondName.hasError('pattern')">
+                        Tu segundo nombre solo debe contener caracteres(A - Z o a - z).
+                      </mat-error>
+                    </div>
+                </mat-form-field>
+                <br/>
+                <mat-form-field appearance="outline">
+                    <mat-label>Primer Apellido</mat-label>
+                    <input matInput type="text" name="firstApellido" id="firstApellido" [(ngModel)]="perfil.primerApellido"
+                      #firstApellido="ngModel" minlength="1" maxlength="100" pattern="^[A-Za-z]*$" required>
+                    <div *ngIf="firstApellido.dirty && firstApellido.invalid">
+                      <mat-error *ngIf="firstApellido.hasError('required')">
+                        Tu primer apellido es requerido.
+                      </mat-error>
+                      <mat-error *ngIf="firstApellido.hasError('pattern')">
+                        Tu primer apellido solo debe contener caracteres(A - Z o a - z).
+                      </mat-error>
+                      <mat-error *ngIf="firstApellido.hasError('minlength')">
+                        Tu primer apellido debe contener al menos un carácter.
+                      </mat-error>
+                      <mat-error *ngIf="firstApellido.hasError('maxlength')">
+                        Tu primer apellido no puede contener mas de 100 caracteres.
+                      </mat-error>
+                    </div>
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Segundo Apellido</mat-label>
+                    <input matInput type="text" name="secondApellido" id="secondApellido" [(ngModel)]="perfil.segundoApellido"
+                      #secondApellido="ngModel" maxlength="100" pattern="^[A-Za-z]*$">
+                    <div *ngIf="secondApellido.dirty && secondApellido.invalid">
+                      <mat-error *ngIf="secondApellido.hasError('maxlength')">
+                        Tu segundo apellido no puede contener mas de 100 caracteres.
+                      </mat-error>
+                      <mat-error *ngIf="secondApellido.hasError('pattern')">
+                        Tu segundo apellido solo puede contener caracteres(A - Z o a - z).
+                      </mat-error>
+                    </div>
+                </mat-form-field>
+                <br/>
+                <mat-form-field>
+                  <mat-label>Fecha de nacimiento</mat-label>
+                  <input matInput [matDatepicker]="picker" placeholder="Selecciona una fecha"
+                    required [(ngModel)]="fechaNacimiento" #birthName="ngModel" name="birthDate" id="birthName">
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker touchUi #picker></mat-datepicker>
+                  <div *ngIf="birthName.dirty && birthName.invalid">
+                    <mat-error *ngIf="birthName.hasError('required')">
+                      Tu fecha de nacimiento es requerida.
+                    </mat-error>
+                  </div>
+                </mat-form-field>
+              </mat-card-content>
+            </mat-card>
+          </mat-card-content>
+          <mat-card-actions align="end">
+              <button type="button" mat-stroked-button style="margin-right: 10px;" (click)="changePassword()">Cambiar Contraseña</button>
+              <button type="button" mat-stroked-button color="warn" *ngIf="usuarioExiste" (click)="deleteProfile()">Eliminar Perfil</button>
+              <button type="button" mat-stroked-button *ngIf="!usuarioExiste" (click)="logout()">Cerrar Sesión</button>
+              <button mat-raised-button color="primary" type="submit" [disabled]="!profileForm.form.valid || !profilePicUrl">Guardar Perfil</button>
+          </mat-card-actions>
+        </mat-card>
+        <input type="file" style="visibility: hidden;" id="profileImageInput" accept="image/png, image/jpeg, image/jpg" (change)="loadProfileImage($event)">
+  </form>
+</div>

@@ -1,0 +1,33 @@
+.btnMinimizar:hover {
+    cursor: pointer;
+}
+
+.btnEnviar {
+    box-shadow: 0 0px;
+    outline: transparent !important;
+}
+
+.msgRecibido {
+    float: left;
+    background-color: white;
+}
+
+.msgEnviado {
+    float: right;
+    background-color: lightblue;
+}
+
+.avatarMsgEnviado {
+    float: left;
+    margin-right: 7px;
+}
+
+.avatarMsgRecibido {
+    float: right;
+    margin-right: 7px;
+}
+
+.btnEnviar:hover {
+    cursor: pointer;
+    color: royalblue;
+}

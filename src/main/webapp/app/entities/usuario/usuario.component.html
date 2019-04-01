@@ -1,0 +1,79 @@
+<div style="background-color: lightgrey; overflow-y: auto; position: absolute; width: 100%;">
+    <h2 id="page-heading">
+        <span>Usuarios</span>
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-usuario" [routerLink]="['/usuario/new']">
+            <fa-icon [icon]="'plus'"></fa-icon>
+            <span >
+            Create new Usuario
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <br/>
+    <div class="table-responsive" *ngIf="usuarios">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+            <th><span>ID</span></th>
+            <th><span>Usuario</span></th>
+            <th><span>Primer Nombre</span></th>
+            <th><span>Segundo Nombre</span></th>
+            <th><span>Primer Apellido</span></th>
+            <th><span>Segundo Apellido</span></th>
+            <th><span>Email</span></th>
+            <th><span>Fecha Nacimiento</span></th>
+            <th><span>Fecha Registro</span></th>
+            <th><span>Profile Pic</span></th>
+            <th><span>Actividad</span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let usuario of usuarios ;trackBy: trackId">
+                <td><a [routerLink]="['/usuario', usuario.id, 'view' ]">{{usuario.id}}</a></td>
+                <td>{{usuario.usuario}}</td>
+                <td>{{usuario.primerNombre}}</td>
+                <td>{{usuario.segundoNombre}}</td>
+                <td>{{usuario.primerApellido}}</td>
+                <td>{{usuario.segundoApellido}}</td>
+                <td>{{usuario.email}}</td>
+                <td>{{usuario.fechaNacimiento | date:'mediumDate'}}</td>
+                <td>{{usuario.fechaRegistro | date:'mediumDate'}}</td>
+                <td>
+                    <a *ngIf="usuario.profilePic" (click)="openFile(usuario.profilePicContentType, usuario.profilePic)">open</a>
+                    <span *ngIf="usuario.profilePic">{{usuario.profilePicContentType}}, {{byteSize(usuario.profilePic)}}</span>
+                </td>
+                <td>
+                    <span *ngFor="let actividad of usuario.actividads; let last = last">
+                            <a class="form-control-static" [routerLink]="['../actividad', actividad?.id, 'view' ]">{{actividad.id}}</a>{{last ? '' : ', '}}
+                        </span>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['/usuario', usuario.id, 'view' ]"
+                                class="btn btn-info btn-sm">
+                            <fa-icon [icon]="'eye'"></fa-icon>
+                            <span class="d-none d-md-inline">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/usuario', usuario.id, 'edit']"
+                                class="btn btn-primary btn-sm">
+                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                            <span class="d-none d-md-inline">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'usuario/'+ usuario.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <fa-icon [icon]="'times'"></fa-icon>
+                            <span class="d-none d-md-inline">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

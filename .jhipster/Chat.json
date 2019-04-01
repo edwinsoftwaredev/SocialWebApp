@@ -1,0 +1,36 @@
+{
+    "name": "Chat",
+    "fields": [
+        {
+            "fieldName": "fechaCreacion",
+            "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "ultimaVezVisto",
+            "fieldType": "LocalDate"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "mensaje",
+            "otherEntityName": "mensaje",
+            "otherEntityRelationshipName": "chat"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "usuario",
+            "otherEntityName": "usuario",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20181110225029",
+    "entityTableName": "tbl_sp_chat",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

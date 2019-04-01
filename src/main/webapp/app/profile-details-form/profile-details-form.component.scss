@@ -1,0 +1,60 @@
+.principalContainer {
+    width: 60%;
+    min-width: 500px;
+    margin: 10px auto;
+}
+
+@media screen and (max-width: 1000px) {
+    .principalContainer {
+        width: 100%;
+        min-width: auto;
+    }
+}
+
+.profilePic-container {
+    width: 230px;
+    height: 180px;
+    position: relative;
+    overflow: hidden;
+    margin: auto;
+}
+
+.hoverPic {
+    background-size: cover;
+    background-position-x: center;
+    background-position-y: center;
+    height: 180px;
+    width: 180px;
+    margin: 0px auto;
+    border: 4px solid #607d8b;
+}
+
+.hoverPic:hover {
+    border: 4px solid #26a69a !important;
+    cursor: pointer !important;
+}
+
+.innerDataCards {
+    width: 70%;
+    margin: auto;
+    background-color: whitesmoke;
+    text-align: center;
+}
+
+@media screen and (max-width: 1000px) {
+    .innerDataCards {
+        width: 90%;
+    }
+
+    mat-form-field {
+        width: 90%;
+    }
+}
+
+.cardTitle {
+    font-size: 16px;
+}
+
+.ng-invalid:not(form) {
+    border-left: 0px;
+}

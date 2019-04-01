@@ -1,0 +1,26 @@
+{
+    "name": "Like",
+    "fields": [
+        {
+            "fieldName": "fechaLike",
+            "fieldType": "LocalDate"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "post",
+            "otherEntityName": "post",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20181110225027",
+    "entityTableName": "tbl_sp_like",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

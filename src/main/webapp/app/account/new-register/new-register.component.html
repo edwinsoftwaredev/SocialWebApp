@@ -1,0 +1,87 @@
+<div style="margin: auto;">
+    <form role="form" *ngIf="!success" style="text-align: center;" (ngSubmit)="register()" #registerForm="ngForm">
+        <mat-card class="formCard">
+          <mat-card-header>
+              <mat-card-title>Registro</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+              <mat-form-field appearance="standard" style="width: 80%;">
+                <mat-label>Usuario</mat-label>
+                <input matInput type="text" id="login" name="login" placeholder="Tu usuario" 
+                  minlength=1 maxlength=50 pattern="^[_.@A-Za-z0-9]*$" #login="ngModel" required [(ngModel)]="registerAccount.login">
+                <div *ngIf="login.dirty && login.invalid">
+                    <mat-error *ngIf="login.dirty && login.invalid && login.hasError('required')">
+                        Tu usuario es requerido.
+                      </mat-error>
+                      <mat-error *ngIf="login.dirty && login.invalid && login.hasError('minlength')">
+                        Tu usuario tiene que ser de al menos 1 carácter.
+                      </mat-error>
+                      <mat-error *ngIf="login.dirty && login.invalid && login.hasError('maxlength')">
+                        Tu usuario no puede ser mayor de 50 caracteres.
+                      </mat-error>
+                      <mat-error *ngIf="login.dirty && login.invalid && login.hasError('pattern')">
+                        Tu usuario solo puede contener carateres y digitos.
+                      </mat-error>
+                </div>
+              </mat-form-field>
+              <mat-form-field appearance="standard" style="width: 80%;">
+                <mat-label>Email</mat-label>
+                <input matInput type="email" id="email" name="email" placeholder="Tu email" 
+                  minlength=5 maxlength=254 [(ngModel)]="registerAccount.email" #email="ngModel" email required>
+                <div *ngIf="email.dirty && email.invalid">
+                  <mat-erro *ngIf="email.hasError('required')">
+                    Tu email es requerido.
+                  </mat-erro>
+                  <mat-error *ngIf="email.hasError('invalid')">
+                    Tu email es invalido.
+                  </mat-error>
+                  <mat-error *ngIf="email.hasError('minlength')">
+                    Tu email requiere al menos 5 caracteres.
+                  </mat-error>
+                  <mat-error *ngIf="email.hasError('maxlength')">
+                    Tu email no puede ser mayor de 50 caracteres.
+                  </mat-error>
+                </div>
+              </mat-form-field>
+              <mat-form-field appearance="standard" style="width: 80%;">
+                <mat-label>Contraseña</mat-label>
+                <input matInput type="password" id="password" name="password" #password="ngModel" placeholder="Tu contraseña"
+                  [(ngModel)]="registerAccount.password" minlength=4 maxlength=50 required>
+                <div *ngIf="password.dirty && password.invalid">
+                  <mat-error *ngIf="password.hasError('required')">
+                    Tu contraseña es requerida.
+                  </mat-error>
+                  <mat-error *ngIf="password.hasError('minlength')">
+                    Tu contraseña debe tener por lo menos 4 caracteres
+                  </mat-error>
+                  <mat-error *ngIf="password.hasError('maxlength')">
+                    Tu contraseña no puede ser mayor de 50 caracters.
+                  </mat-error>
+                </div>
+              </mat-form-field>
+              <div style="width: 80%; text-align: left; margin: auto;">
+                  <jhi-password-strength-bar [passwordToCheck]="registerAccount.password"></jhi-password-strength-bar>
+              </div>
+              <mat-form-field appearance="standard" style="width: 80%;">
+                  <mat-label>Password de confirmación</mat-label>
+                  <input matInput type="password" id="confirmPassword" name="confirmPassword" #confirmPasswordInput="ngModel" placeholder="Confirma la contraseña"
+                    [(ngModel)]="confirmPassword" minlength=4 maxlength=50 required>
+                  <div *ngIf="confirmPasswordInput.dirty && confirmPasswordInput.invalid">
+                    <mat-error *ngIf="confirmPasswordInput.hasError('required')">
+                      Tu contraseña de confirmación es requerida.
+                    </mat-error>
+                    <mat-error *ngIf="confirmPasswordInput.hasError('minlength')">
+                      Tu contraseña de confirmación debe tener por lo menos 4 caracteres
+                    </mat-error>
+                    <mat-error *ngIf="confirmPasswordInput.hasError('maxlength')">
+                      Tu contraseña de confirmación no puede ser mayor de 50 caracters.
+                    </mat-error>
+                  </div>
+              </mat-form-field>
+          </mat-card-content>
+          <mat-dialog-actions align="end">
+            <button mat-button color="primary" type="submit" [disabled]="!registerForm.form.valid">Registrarte</button>
+          </mat-dialog-actions>
+        </mat-card>
+    </form>
+  </div>

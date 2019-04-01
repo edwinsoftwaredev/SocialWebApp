@@ -1,0 +1,39 @@
+.modal-header {
+    padding: 10px;
+    font-weight: bolder;
+    font-size: 13pt;
+    background-color: darkgray;
+    color: white;
+}
+
+.close {
+    color: white;
+}
+
+.close:focus {
+    outline: none;
+}
+
+.textPost {
+    width: 100%;
+}
+
+.modal-body {
+    font-size: 12pt;
+    font-weight: bolder;
+    background-color: #e4e5e6;
+}
+
+.card {
+    margin-top: 5px;
+    width: 100%;
+}
+
+.modal-holder {
+    animation-name: example;
+    animation-duration: 0.3s;
+}
+
+button {
+    font-size: 9pt;
+}

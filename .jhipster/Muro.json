@@ -1,0 +1,14 @@
+{
+    "name": "Muro",
+    "fields": [],
+    "relationships": [],
+    "changelogDate": "20181110225031",
+    "entityTableName": "tbl_sp_muro",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

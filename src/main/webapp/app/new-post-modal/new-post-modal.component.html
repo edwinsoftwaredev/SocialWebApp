@@ -1,0 +1,29 @@
+<div mat-dialog-content>
+    <div class="card jh-card" style="margin-top: 0px;">
+        <mat-form-field>
+            <textarea rows="5" placeholder="¿Qué dirá el Post?" matInput [(ngModel)]="texto"></textarea>
+        </mat-form-field>
+    </div>
+    <!--descomentar si se implenta url-->
+    <!--<div class="card jh-card">
+        <mat-form-field>
+            <input matInput placeholder="Enlace URL" [(ngModel)]="url">
+        </mat-form-field>
+    </div>-->
+    <div class="dropzone card jh-card">
+        <span>Archivos del Post</span>
+        <form [formGroup]="demoForm">
+            <!--filesize="104857600"-->
+            <file-upload style="font-size: 7pt;"  formControlName="files"></file-upload>
+        </form>
+    </div>
+</div>
+<div mat-dialog-actions>
+    <button mat-button [disabled]="loadingFlag" (click)="dialogRef.close()">
+        Cancelar
+    </button>
+    <button mat-button color="primary" [disabled]="loadingFlag" (click)="savePost()">
+        Publicar
+    </button>
+</div>
+<mat-progress-bar style="margin-top: 20px;" *ngIf="loadingFlag" mode="indeterminate"></mat-progress-bar>

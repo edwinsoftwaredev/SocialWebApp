@@ -1,0 +1,30 @@
+{
+    "name": "Mensaje",
+    "fields": [
+        {
+            "fieldName": "texto",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "fechaCreacion",
+            "fieldType": "LocalDate"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "chat",
+            "otherEntityName": "chat",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20181110225030",
+    "entityTableName": "tbl_sp_ms",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

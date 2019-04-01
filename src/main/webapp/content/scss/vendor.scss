@@ -1,0 +1,16 @@
+/* after changing this file run 'npm run webpack:build' */
+
+/***************************
+put Sass variables here:
+eg $input-color: red;
+****************************/
+// Override Boostrap variables
+@import 'bootstrap-variables';
+// Import Bootstrap source files from node_modules
+@import '~bootstrap/scss/bootstrap';
+@import '~primeng/resources/primeng.min.css';
+@import '~primeng/resources/themes/nova-light/theme.css';
+@import '~primeicons/primeicons.css';
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+
+/* jhipster-needle-scss-add-vendor JHipster will add new css style */

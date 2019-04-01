@@ -1,0 +1,63 @@
+<div style="background-color: lightgrey; overflow-y: auto; position: absolute; width: 100%;">
+    <h2 id="page-heading">
+        <span>File Posts</span>
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-file-post" [routerLink]="['/file-post/new']">
+            <fa-icon [icon]="'plus'"></fa-icon>
+            <span >
+            Create new File Post
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <br/>
+    <div class="table-responsive" *ngIf="filePosts">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+            <th><span>ID</span></th>
+            <th><span>File</span></th>
+            <th><span>Post</span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let filePost of filePosts ;trackBy: trackId">
+                <td><a [routerLink]="['/file-post', filePost.id, 'view' ]">{{filePost.id}}</a></td>
+                <td>
+                    <a *ngIf="filePost.file" (click)="openFile(filePost.fileContentType, filePost.file)">open</a>
+                    <span *ngIf="filePost.file">{{filePost.fileContentType}}, {{byteSize(filePost.file)}}</span>
+                </td>
+                <td>
+                    <div *ngIf="filePost.post">
+                        <a [routerLink]="['../post', filePost.post?.id, 'view' ]" >{{filePost.post?.id}}</a>
+                    </div>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['/file-post', filePost.id, 'view' ]"
+                                class="btn btn-info btn-sm">
+                            <fa-icon [icon]="'eye'"></fa-icon>
+                            <span class="d-none d-md-inline">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/file-post', filePost.id, 'edit']"
+                                class="btn btn-primary btn-sm">
+                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                            <span class="d-none d-md-inline">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'file-post/'+ filePost.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <fa-icon [icon]="'times'"></fa-icon>
+                            <span class="d-none d-md-inline">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

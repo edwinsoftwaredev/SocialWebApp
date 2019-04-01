@@ -1,0 +1,98 @@
+<div class="principal-container" *ngIf="usuario">
+
+  <div class="secondary-container">
+      <div class="muro-nav">
+
+          <div *ngIf="fullPosts" class="muro" style="margin-top: -15px; height: 100vh; float: left; width: 35vw;" [ngClass]="{'leftPanel': !estadoRightPanel, 'leftPanelInactive': estadoRightPanel}" infinite-scroll [infiniteScrollDistance]="10" [infiniteScrollThrottle]="500"
+              [scrollWindow]="false" (scrolled)="muroScrolled()">
+              <mat-card *ngIf="noHayPosts || (!noHayPosts && fullPosts.length === 0)" class="postCard" style="margin-top: 5px;">
+                  <mat-card-content style="text-align: center; margin: 10px;" *ngIf="noHayPosts">No tiene posts...</mat-card-content>
+                  <mat-spinner *ngIf="!noHayPosts && fullPosts.length === 0" style="display: block; margin: auto;" color="warn" [diameter]="35"></mat-spinner>
+              </mat-card>
+              <mat-card *ngFor="let post of fullPosts" class="postcard">
+                  <mat-card-header>
+                      <div mat-card-avatar style="background-size: cover; background-position-x: center; background-position-y: center; height: 50px; width: 50px;" [ngStyle]="{'background-image': 'url(' + post.profilePicSanitized + ')'}" ></div>
+                      <mat-card-title>{{post.sourcePost.usuario.primerNombre}} {{post.sourcePost.usuario.primerApellido}}</mat-card-title>
+                      <mat-card-subtitle>{{post.fechaPublicacionPost}}</mat-card-subtitle>
+                  </mat-card-header>
+                  <img mat-card-image *ngFor="let file of post.postImages" [src]="file.sanitizedUrl" alt="Imagen">
+                  <mat-card-content>
+                      <p>
+                          {{post.sourcePost.texto}}
+                      </p>
+                  </mat-card-content>
+                  <mat-card-actions>
+                      <button style="min-width: 35px; color: #BDBDBD;" [disabled]="!sonAmigos || loadingLikeFlag" *ngIf="validateLike(post.sourcePost.likes)" mat-stroked-button (click)="setLike(post)" matBadge="{{post.sourcePost.likes.length}}" matBadgePosition="after" matBadgeColor="accent">
+                          <mat-icon>thumb_up_alt</mat-icon>
+                      </button>
+                      <button style="color: #26A69A; min-width: 35px;" [disabled]="!sonAmigos || loadingLikeFlag" *ngIf="!validateLike(post.sourcePost.likes)" mat-stroked-button (click)="deleteLike(post)" matBadge="{{post.sourcePost.likes.length}}" matBadgePosition="after" matBadgeColor="accent">
+                          <mat-icon>thumb_up_alt</mat-icon>
+                      </button>
+                  </mat-card-actions>
+              </mat-card>
+              <div class="jokerCard">
+                  <br/>
+                  <div style="display: block; margin: auto;" *ngIf="fullPosts.length !== 0">
+                      <mat-spinner style="display: block; margin: auto;" color="warn" [diameter]="35" *ngIf="jokerCardText === 'Cargando Posts Anteriores...'"></mat-spinner>
+                  </div>
+                  <div style="height: 100px;"></div>
+              </div>
+          </div>
+          <div class="muro rightPanel" [ngClass]="{'rightPanelActive': estadoRightPanel, 'rightPanel': !estadoRightPanel}">
+              <mat-accordion style="width: 100%;">
+
+                  <mat-expansion-panel [expanded]="true">
+                      <mat-expansion-panel-header>
+                          <mat-panel-title>
+                              <mat-icon>group</mat-icon>
+                              <span>&nbsp;{{amigos.length}} Amigos</span>
+                          </mat-panel-title>
+                      </mat-expansion-panel-header>
+                      <mat-list style="max-height: 250px !important; overflow-y: auto; padding: 5px;">
+                          <mat-list-item *ngFor="let amigo of amigos" style="margin-bottom: -10px;">
+                              <mat-chip-list style="width: 100%;">
+                                  <mat-chip [routerLink]="['/profile', amigo.usuario, 'view' ]" style="background-color: #78909C; color: white; padding-top: 5px; padding-bottom: 5px; width: 100%; margin-top: 0px; margin-bottom: 0px; float: left; cursor: pointer;">
+                                      <mat-chip-avatar style="width: 31px; height: 25px;">
+                                          <div style="background-size: cover; background-position-x: center; background-position-y: center; height: 25px; width: 25px;" [ngStyle]="{'background-image': 'url(' + getSanitizedUrl(amigo.profilePic, amigo.profilePicContentType) + ')'}" ></div>
+                                      </mat-chip-avatar>
+                                      <span style="width: 100%; display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                                            {{amigo.primerNombre}} {{amigo.primerApellido}}
+                                        </span>
+                                  </mat-chip>
+                              </mat-chip-list>
+                              <button style="float: left; color: #BDBDBD" mat-icon-button>
+                                  <mat-icon>remove_circle</mat-icon>
+                              </button>
+                          </mat-list-item>
+                      </mat-list>
+                  </mat-expansion-panel>
+
+                  <mat-expansion-panel>
+                      <mat-expansion-panel-header>
+                          <mat-panel-title>
+                              <mat-icon>pool</mat-icon>
+                              <span>&nbsp;Actividades</span>
+                          </mat-panel-title>
+                      </mat-expansion-panel-header>
+                      <p>Listado de actividades con sus fechas de realizacion</p>
+                  </mat-expansion-panel>
+
+              </mat-accordion>
+          </div>
+      </div>
+  </div>
+</div>
+
+
+<ng-template #snackBarTemplate>
+  <div style="display: inline; margin: 0px auto;">
+      <div style="float: left;">
+          <span>Solicitud de amistad enviada a:</span>
+      </div>
+      <br/>
+      <div style="float: left;">
+          <img [src]="snackProfilePicUrlSanitized" height="35" aria-hidden>
+          <span>{{snackProfileName}}</span>
+      </div>
+  </div>
+</ng-template>

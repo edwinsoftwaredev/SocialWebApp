@@ -1,0 +1,35 @@
+<h3 style="color: royalblue;"><strong>Social</strong></h3>
+<form role="form" (ngSubmit)="login()" (keypress)="triggerClick($event)" #modalLoginForm="ngForm">
+    <mat-dialog-content style="font-size: 13px; min-height: 200px;">
+        <mat-form-field appearance="outline" style="width: 100%;">
+            <mat-label>Usuario</mat-label>
+            <input type="text" name="username" id="username" [(ngModel)]="this.username" matInput>
+            <mat-icon matSuffix><fa-icon [icon]="['fas', 'user-circle']"></fa-icon></mat-icon>
+        </mat-form-field>
+        <mat-form-field appearance="outline" style="width: 100%">
+          <mat-label>Contraseña</mat-label>
+          <input name="password" id="password" [(ngModel)]="this.password" matInput type="password">
+          <mat-icon matSuffix><fa-icon [icon]="['fas', 'key']"></fa-icon></mat-icon>
+        </mat-form-field>
+        <br/>
+        <mat-slide-toggle name="rememberMe" id="rememberMe" [(ngModel)]="this.rememberMe" color="primary" align="right">
+          Recordarme
+        </mat-slide-toggle>
+      </mat-dialog-content>
+      <mat-dialog-actions align="end" style="margin-top: -40px;">
+        <button mat-button mat-dialog-close [disabled]="loadingFlag">Cancelar</button>
+        <button id="btnform" mat-button color="primary" type="submit" [disabled]="!modalLoginForm.form.valid || loadingFlag">Entrar</button>
+        <br/>
+        <br/>
+        <mat-progress-bar *ngIf="loadingFlag" mode="indeterminate"></mat-progress-bar>
+          <!--Si se desea recuperar la contraseña deshabiblitar esto-->
+        <!--<mat-toolbar *ngIf="authenticationError">
+            <button style="width: 100%" mat-stroked-button color="warn" (click)="requestResetPassword()">Olvidaste tu contraseña?</button>
+        </mat-toolbar>-->
+        <br/>
+        <mat-toolbar style="font-size: 14px;">
+            <span>No tienes una cuenta?!</span>
+            <button style="margin-left: auto" mat-dialog-close color="primary" mat-stroked-button (click)="register()">Registrarte</button>
+        </mat-toolbar>
+      </mat-dialog-actions>
+</form>

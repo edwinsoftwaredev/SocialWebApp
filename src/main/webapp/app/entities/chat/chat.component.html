@@ -1,0 +1,62 @@
+<div style="background-color: lightgrey; overflow-y: auto; position: absolute; width: 100%;">
+    <h2 id="page-heading">
+        <span>Chats</span>
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-chat" [routerLink]="['/chat/new']">
+            <fa-icon [icon]="'plus'"></fa-icon>
+            <span >
+            Create new Chat
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <br/>
+    <div class="table-responsive" *ngIf="chats">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+            <th><span>ID</span></th>
+            <th><span>Fecha Creacion</span></th>
+            <th><span>Ultima Vez Visto</span></th>
+            <th><span>Usuario</span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let chat of chats ;trackBy: trackId">
+                <td><a [routerLink]="['/chat', chat.id, 'view' ]">{{chat.id}}</a></td>
+                <td>{{chat.fechaCreacion | date:'mediumDate'}}</td>
+                <td>{{chat.ultimaVezVisto | date:'mediumDate'}}</td>
+                <td>
+                    <div *ngIf="chat.usuario">
+                        <a [routerLink]="['../usuario', chat.usuario?.id, 'view' ]" >{{chat.usuario?.id}}</a>
+                    </div>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['/chat', chat.id, 'view' ]"
+                                class="btn btn-info btn-sm">
+                            <fa-icon [icon]="'eye'"></fa-icon>
+                            <span class="d-none d-md-inline">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/chat', chat.id, 'edit']"
+                                class="btn btn-primary btn-sm">
+                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                            <span class="d-none d-md-inline">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'chat/'+ chat.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <fa-icon [icon]="'times'"></fa-icon>
+                            <span class="d-none d-md-inline">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,55 @@
+<form style="margin: -24px;">
+    <mat-form-field appearance="fill" style="width: 100%;">
+        <input #inputSearch matInput [matAutocomplete]="auto" style="width: 100%;" [formControl]="profileNameCtrl">
+        <mat-label>Buscar</mat-label>
+        <mat-icon matPrefix style="margin-right: 15px;">search</mat-icon>
+        <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngIf="searchingSpinnerFlag">
+                <div style="margin: 0px 0px 0px 15%;">
+                    <mat-spinner [diameter]=25></mat-spinner>
+                </div>
+            </mat-option>
+            <mat-option class="searchOptionBarra" style="height: 60px !important;" *ngFor="let profile of  filteredProfiles | async" [value]="profile.usuario" [routerLink]="['/profile', profile.usuario, 'view' ]" (click)="closeDialog()">
+                <div style="float: left;">
+                    <div mat-card-avatar style="background-size: cover; background-position-x: center; background-position-y: center; height: 50px; width: 50px;" [ngStyle]="{'background-image': 'url(' + profile.profilePicUrlSanitized + ')'}"></div>
+                </div>
+                <div style="float: left; margin-left: 10px; width: 70%; font-size: 14px;">
+                    <div style="line-height: normal;">
+                        <span style="width: 100%; display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{profile.firstNameLastNameSpaced}}</span>
+                    </div>
+                    <div style="line-height: normal;">
+                        <button style="line-height: 25px; background-color: #26A69A; color: white;" mat-flat-button disabled class="bottomSearchFilter" mat-button *ngIf="profile.amigos">
+                            <fa-icon [icon]="['fas', 'user-friends']"></fa-icon>
+                            Son Amigos
+                        </button>
+                        <button style="line-height: 25px; background-color: #26A69A; color: white;" mat-flat-button disabled class="bottomSearchFilter" mat-button *ngIf="profile.envieSolicitud">
+                            <fa-icon [icon]="['fas', 'pause-circle']"></fa-icon>
+                            Solicitud Enviada
+                        </button>
+                        <button style="line-height: 25px; background-color: #26A69A; color: white;" (click)="aceptarSolicitudBusqueda($event, profile)" mat-flat-button class="bottomSearchFilter" mat-button *ngIf="profile.envioSolicitud">
+                            <fa-icon [icon]="['fas', 'exclamation-circle']"></fa-icon>
+                            Aceptar Solicitud
+                        </button>
+                        <button style="line-height: 25px; background-color: #26A69A; color: white;" (click)="enviarSolicitudBusqueda($event, profile)" mat-flat-button class="bottomSearchFilter" mat-button *ngIf="!profile.amigos && !profile.envieSolicitud && !profile.envioSolicitud">
+                            <fa-icon [icon]="['fas', 'user-plus']"></fa-icon>
+                            Enviar Solicitud
+                        </button>
+                    </div>
+                </div>
+            </mat-option>
+        </mat-autocomplete>
+    </mat-form-field>
+</form>
+
+<ng-template #snackBarTemplate>
+    <div style="display: inline-block;">
+        <div style="float: left;">
+            <div mat-card-avatar style="background-size: cover; background-position-x: center; background-position-y: center; height: 40px; width: 40px;" [ngStyle]="{'background-image': 'url(' + snackProfilePicUrlSanitized + ')'}"></div>
+        </div>
+        <div style="float: left; margin-left: 5px;">
+            <div>
+                <span style="line-height: 40px; font-size: 12px;">Solicitud enviada a: {{snackProfileName}}</span>
+            </div>
+        </div>
+    </div>
+</ng-template>

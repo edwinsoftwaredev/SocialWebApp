@@ -1,0 +1,22 @@
+<jhi-page-ribbon></jhi-page-ribbon>
+<mat-drawer-container style="height: 100vh !important;">
+
+    <mat-drawer *ngIf="mobileQuery"
+                [opened]="false"
+                #sidenav
+                [mode]="mobileQuery.matches ? 'over' : 'side'"
+                style="background-color: #607D8B">
+        <jhi-profile-panel></jhi-profile-panel>
+    </mat-drawer>
+
+    <div style="height: 100%; overflow-y: hidden; background-color: lightgrey;">
+        <router-outlet name="navbar"></router-outlet>
+        <div [@routeAnimations]="prepareRoute(outlet)">
+            <router-outlet #outlet="outlet"></router-outlet>
+        </div>
+        <!--<router-outlet></router-outlet>-->
+        <router-outlet name="popup"></router-outlet>
+    </div>
+
+</mat-drawer-container>
+

@@ -1,0 +1,228 @@
+<div class="principal-container" *ngIf="usuario">
+    <div class="secondary-container">
+        <div class="muro-nav">
+            <!--CONTENEDOR DE POSTS-->
+            <div class="muro" style="margin-top: -15px; height: 100vh; float: left; width: 35vw;" [ngClass]="{'leftPanel': !estadoRightPanel, 'leftPanelInactive': estadoRightPanel}" infinite-scroll [infiniteScrollDistance]="10" [infiniteScrollThrottle]="500"
+                [scrollWindow]="false" (scrolled)="muroScrolled()">
+                <mat-card *ngIf="noHayPosts || (!noHayPosts && fullPosts.length === 0)" class="postCard" style="margin-top: 5px;">
+                    <mat-card-content style="text-align: center; margin: 10px;" *ngIf="noHayPosts">No tienes posts...</mat-card-content>
+                    <mat-spinner *ngIf="!noHayPosts && fullPosts.length === 0" style="display: block; margin: auto;" color="warn" [diameter]="35"></mat-spinner>
+                </mat-card>
+                <mat-card *ngFor="let post of fullPosts" class="postcard">
+                    <mat-card-header>
+                        <div mat-card-avatar style="background-size: cover; background-position-x: center; background-position-y: center; height: 50px; width: 50px;" [ngStyle]="{'background-image': 'url(' + post.profilePicSanitized + ')'}" ></div>
+                        <mat-card-title>{{post.sourcePost.usuario.primerNombre}} {{post.sourcePost.usuario.primerApellido}}</mat-card-title>
+                        <mat-card-subtitle>{{post.fechaPublicacionPost}}</mat-card-subtitle>
+                        <div style="float: right; margin-left: auto;">
+                            <button mat-icon-button [matMenuTriggerFor]="menuPost" style="color: rgb(99, 98, 98);" *ngIf="post.sourcePost.usuario.id === usuario.id">
+                                <mat-icon>more_vert</mat-icon>
+                            </button>
+                            <mat-menu #menuPost="matMenu">
+                                <button mat-menu-item (click)="openNewModalPost(post.sourcePost, true)">
+                                    <mat-icon>edit</mat-icon>
+                                    Editar
+                                </button>
+                                <button mat-menu-item (click)="eliminarPost(post.sourcePost)">
+                                    <mat-icon>delete</mat-icon>
+                                    Eliminar
+                                </button>
+                            </mat-menu>
+                        </div>
+                    </mat-card-header>
+                    <img mat-card-image *ngFor="let file of post.postImages" [src]="file.sanitizedUrl" alt="Imagen">
+                    <mat-card-content>
+                        <p>
+                            {{post.sourcePost.texto}}
+                        </p>
+                    </mat-card-content>
+                    <mat-card-actions>
+                        <button [disabled]="loadingLikeFlag" style="min-width: 35px; color: #BDBDBD;" *ngIf="validateLike(post.sourcePost.likes)" mat-stroked-button (click)="setLike(post, $event)" matBadge="{{post.sourcePost.likes.length}}" matBadgePosition="after" matBadgeColor="accent">
+                            <mat-icon>thumb_up_alt</mat-icon>
+                        </button>
+                        <button [disabled]="loadingLikeFlag" style="color: #26A69A; min-width: 35px;" *ngIf="!validateLike(post.sourcePost.likes)" mat-stroked-button (click)="deleteLike(post, $event)" matBadge="{{post.sourcePost.likes.length}}" matBadgePosition="after" matBadgeColor="accent">
+                            <mat-icon>thumb_up_alt</mat-icon>
+                        </button>
+                    </mat-card-actions>
+                </mat-card>
+                <div class="jokerCard">
+                    <br/>
+                    <div style="display: block; margin: auto;" *ngIf="fullPosts.length !== 0">
+                        <mat-spinner style="display: block; margin: auto;" color="warn" [diameter]="35" *ngIf="jokerCardText === 'Cargando Posts Anteriores...'"></mat-spinner>
+                    </div>
+                    <div style="height: 100px;"></div>
+                </div>
+            </div>
+
+            <!--PANEL DERECHO-->
+            <div class="muro rightPanel" [ngClass]="{'rightPanelActive': estadoRightPanel, 'rightPanel': !estadoRightPanel}">
+                <mat-accordion style="width: 100%;">
+
+                    <!--SOLICITUDES-->
+                    <mat-expansion-panel [expanded]="true">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                <!--<mat-chip color="accent" [disabled]="true">-->
+                                    <mat-icon>assignment_ind</mat-icon>
+                                    <span *ngIf="!solicitudesRecibidas" style="width: 100%; display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">&nbsp;Solicitudes Pendientes</span>
+                                    <span *ngIf="solicitudesRecibidas" style="width: 100%; display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">&nbsp;Solicitudes Pendientes</span>
+                                <!--</mat-chip>-->
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+
+                        <mat-tab-group>
+                            <mat-tab label="Recibidas" style="width: 100% !important;">
+                                <mat-list style="max-height: 250px !important; overflow-y: auto; padding: 5px;">
+                                    <mat-list-item *ngFor="let solicitud of solicitudesRecibidas" style="margin-bottom: -10px;">
+                                        <mat-chip-list style="width: 100%;">
+                                            <mat-chip [routerLink]="['/profile', solicitud.usuario.usuario, 'view' ]" style="background-color: #78909C; color: white; padding-top: 5px; padding-bottom: 5px; width: 100%; margin-top: 0px; margin-bottom: 0px; float: left; cursor: pointer;">
+                                                <mat-chip-avatar style="width: 31px; height: 25px;">
+                                                    <div style="background-size: cover; background-position-x: center; background-position-y: center; height: 25px; width: 25px;" [ngStyle]="{'background-image': 'url(' + solicitud.usuario.profilePic + ')'}"></div>
+                                                </mat-chip-avatar>
+                                                <span style="width: 100%; display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                                                    {{solicitud.usuario.primerNombre}} {{solicitud.usuario.primerApellido}}
+                                                </span>
+                                            </mat-chip>
+                                        </mat-chip-list>
+                                        <button style="float: left; color: #26A69A" mat-icon-button (click)="acertarSolicitudPanel(solicitud)">
+                                            <mat-icon>check_circle</mat-icon>
+                                        </button>
+                                        <button style="float: left; color: #BDBDBD" mat-icon-button (click)="eliminarSolicitudRecibida(solicitud)">
+                                            <mat-icon>remove_circle</mat-icon>
+                                        </button>
+                                    </mat-list-item>
+                                </mat-list>
+                            </mat-tab>
+
+                            <mat-tab label="Enviadas">
+                                <mat-list style="max-height: 250px !important; overflow-y: auto; padding: 5px;">
+                                    <mat-list-item *ngFor="let usuario of usuarioSolicitudesEnviadas" style="margin-bottom: -10px;">
+                                        <mat-chip-list style="width: 100%;">
+                                            <mat-chip [routerLink]="['/profile', usuario.usuario, 'view' ]" style="background-color: #78909C; color: white; padding-top: 5px; padding-bottom: 5px; width: 100%; margin-top: 0px; margin-bottom: 0px; float: left; cursor: pointer;">
+                                                <mat-chip-avatar style="width: 31px; height: 25px;">
+                                                    <div style="background-size: cover; background-position-x: center; background-position-y: center; height: 25px; width: 25px;" [ngStyle]="{'background-image': 'url(' + getSanitizedUrl(usuario.profilePic, usuario.profilePicContentType) + ')'}" ></div>
+                                                </mat-chip-avatar>
+                                                <span style="width: 100%; display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                                                    {{usuario.primerNombre}} {{usuario.primerApellido}}
+                                                </span>
+                                            </mat-chip>
+                                        </mat-chip-list>
+                                        <button style="float: left; color: #BDBDBD" mat-icon-button (click)="eliminarSolicitudEnviada(usuario)">
+                                            <mat-icon>remove_circle</mat-icon>
+                                        </button>
+                                    </mat-list-item>
+                                </mat-list>
+                            </mat-tab>
+                        </mat-tab-group>
+                    </mat-expansion-panel>
+
+                    <!--panel de mensajes-->
+                    <mat-expansion-panel [(expanded)]="panelChatsOpened">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+
+                                <div>
+                                    <mat-icon>chat</mat-icon>
+                                    <span>{{usuariosChat.length}}&nbsp;&nbsp;&nbsp;</span>
+                                </div>
+
+                                <div *ngIf="cantMsgSinLeer !== 0">
+                                    <mat-icon style="color: orangered;">chat_bubble</mat-icon>
+                                    <span>{{cantMsgSinLeer}}&nbsp;&nbsp;&nbsp;</span>
+                                </div>
+
+                                <div *ngIf="cantMsgSinLeer === 0">
+                                    <mat-icon>chat_bubble_outline</mat-icon>
+                                    <span>{{cantMsgSinLeer}}&nbsp;&nbsp;&nbsp;</span>
+                                </div>
+
+                                <div>
+                                    <mat-icon>person_pin</mat-icon>
+                                    <span>{{getCantUsuariosConectados()}}&nbsp;&nbsp;&nbsp;</span>
+                                </div>
+
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <mat-list style="max-height: 250px !important; overflow-y: auto; padding: 5px;" *ngIf="usuariosChat.length !== 0">
+                            <div *ngFor="let chat1 of usuariosChat">
+                                <div *ngFor="let usuarios1 of chat1.usuarios">
+                                    <mat-list-item *ngIf="usuarios1.usuario !== usuario.usuario" style="margin-bottom: -10px;">
+                                        <mat-chip-list style="width: 100%;">
+                                            <mat-chip [ngClass]="{'usuarioSinLeer': usuariosSinLeer.indexOf(usuarios1.usuario) !== -1 && chat1.status, 'usuarioLeido': usuariosSinLeer.indexOf(usuarios1.usuario) === -1 && !chat1.status, 'usuarioConectado': chat1.status}" style="width: 100%; margin-top: 0px; margin-bottom: 0px; float: left; cursor: pointer;">
+                                                <mat-chip-avatar style="width: 31px; height: 25px;">
+                                                    <div style="background-size: cover; background-position-x: center; background-position-y: center; height: 25px; width: 25px;" [ngStyle]="{'background-image': 'url(' + getSanitizedUrl(usuarios1.profilePic, usuarios1.profilePicContentType) + ')'}" ></div>
+                                                </mat-chip-avatar>
+                                                <span style="width: 100%; display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                                                    {{usuarios1.primerNombre}} {{usuarios1.primerApellido}}
+                                                </span>
+                                            </mat-chip>
+                                        </mat-chip-list>
+                                        <button style="float: left;" mat-icon-button (click)="abrirPanelMensajes(usuarios1, chat1)">
+                                            <mat-icon>chat</mat-icon>
+                                        </button>
+                                        <button style="float: left; color: #BDBDBD" mat-icon-button (click)="eliminarChat(chat1)">
+                                            <mat-icon>remove_circle</mat-icon>
+                                        </button>
+                                    </mat-list-item>
+                                </div>
+                            </div>
+                        </mat-list>
+                    </mat-expansion-panel>
+
+                    <!--Panel de Amigos-->
+                    <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                <mat-icon>group</mat-icon>
+                                <span>&nbsp;{{amigos.length}} Amigos</span>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <mat-list style="max-height: 250px !important; overflow-y: auto; padding: 5px;">
+                            <mat-list-item *ngFor="let amigo of amigos" style="margin-bottom: -10px;">
+                                <mat-chip-list style="width: 100%;">
+                                    <mat-chip [routerLink]="['/profile', amigo.usuario, 'view' ]" style="background-color: #26A69A; color: white; padding-top: 5px; padding-bottom: 5px; width: 100%; margin-top: 0px; margin-bottom: 0px; float: left; cursor: pointer;">
+                                        <mat-chip-avatar style="width: 31px; height: 25px;">
+                                            <div style="background-size: cover; background-position-x: center; background-position-y: center; height: 25px; width: 25px;" [ngStyle]="{'background-image': 'url(' + getSanitizedUrl(amigo.profilePic, amigo.profilePicContentType) + ')'}" ></div>
+                                        </mat-chip-avatar>
+                                        <span style="width: 100%; display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                                            {{amigo.primerNombre}} {{amigo.primerApellido}}
+                                        </span>
+                                    </mat-chip>
+                                </mat-chip-list>
+                                <button style="float: left;" mat-icon-button (click)="abrirPanelMensajesAmigos(amigo)">
+                                    <mat-icon>chat</mat-icon>
+                                </button>
+                                <button style="float: left; color: #BDBDBD" mat-icon-button (click)="eliminarAmigo(amigo)">
+                                    <mat-icon>remove_circle</mat-icon>
+                                </button>
+                            </mat-list-item>
+                        </mat-list>
+                    </mat-expansion-panel>
+
+                    <!--Aqui van las actividades-->
+                    <!--<mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                <mat-icon>pool</mat-icon>
+                                <span>&nbsp;Actividades</span>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <p>Listado de actividades con sus fechas de realizacion</p>
+                    </mat-expansion-panel>-->
+
+                </mat-accordion>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<ng-template #snackBarTemplate>
+    <div style="float: left;">
+        <div mat-card-avatar style="background-size: cover; background-position-x: center; background-position-y: center; height: 40px; width: 40px;" [ngStyle]="{'background-image': 'url(' + snackProfilePicUrlSanitized + ')'}"></div>
+    </div>
+    <div style="float: left; margin-left: 5px;">
+        <div>
+            <span style="line-height: 40px;">Solicitud de amistad enviada a: {{snackProfileName}}</span>
+        </div>
+    </div>
+</ng-template>

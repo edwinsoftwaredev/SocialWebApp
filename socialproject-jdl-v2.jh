@@ -1,0 +1,84 @@
+
+entity Usuario (tbl_sp_usuario) {
+	usuario String,
+    primerNombre String,
+    segundoNombre String,
+    primerApellido String,
+    segundoApellido String,
+    email String,
+    fechaNacimiento LocalDate,
+    fechaRegistro LocalDate,
+    profilePic Blob
+}
+
+entity Relacion (tbl_sp_rel) {
+    amigoId Long,
+	estado Boolean,
+	fecha LocalDate
+}
+
+entity Post (tbl_sp_post) {
+	texto String,
+    url String,
+    fechaPublicacion LocalDate
+}
+
+entity FilePost (tbl_sp_fp) {
+	file Blob
+}
+
+entity Like (tbl_sp_like) {
+	fechaLike LocalDate
+}
+
+entity Actividad (tbl_sp_hobby) {
+	nombreActividad String,
+    fechaInicio LocalDate,
+    fechaFin LocalDate,
+}
+
+entity Chat (tbl_sp_chat) {
+	fechaCreacion LocalDate
+    ultimaVezVisto LocalDate
+}
+
+entity Mensaje (tbl_sp_ms) {
+	texto String,
+    fechaCreacion LocalDate
+}
+
+entity Muro (tbl_sp_muro) {
+
+}
+
+relationship OneToMany {
+	Usuario to Relacion
+}
+
+relationship OneToMany {
+    Usuario to Like
+}
+
+relationship OneToMany {
+	Usuario to Post
+}
+
+relationship OneToMany {
+	Post to FilePost
+}
+
+relationship OneToMany {
+	Post to Like
+}
+
+relationship ManyToMany {
+	Usuario to Actividad
+}
+
+relationship OneToMany {
+	Usuario to Chat
+}
+
+relationship OneToMany {
+	Chat to Mensaje
+}

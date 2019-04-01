@@ -1,0 +1,68 @@
+<div class="row justify-content-center" style="background-color: lightgrey; overflow-y: auto; position: absolute; width: 100%;">
+    <div class="col-8">
+        <div *ngIf="usuario">
+            <h2><span>Usuario</span> {{usuario.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span>Usuario</span></dt>
+                <dd>
+                    <span>{{usuario.usuario}}</span>
+                </dd>
+                <dt><span>Primer Nombre</span></dt>
+                <dd>
+                    <span>{{usuario.primerNombre}}</span>
+                </dd>
+                <dt><span>Segundo Nombre</span></dt>
+                <dd>
+                    <span>{{usuario.segundoNombre}}</span>
+                </dd>
+                <dt><span>Primer Apellido</span></dt>
+                <dd>
+                    <span>{{usuario.primerApellido}}</span>
+                </dd>
+                <dt><span>Segundo Apellido</span></dt>
+                <dd>
+                    <span>{{usuario.segundoApellido}}</span>
+                </dd>
+                <dt><span>Email</span></dt>
+                <dd>
+                    <span>{{usuario.email}}</span>
+                </dd>
+                <dt><span>Fecha Nacimiento</span></dt>
+                <dd>
+                    <span>{{usuario.fechaNacimiento}}</span>
+                </dd>
+                <dt><span>Fecha Registro</span></dt>
+                <dd>
+                    <span>{{usuario.fechaRegistro}}</span>
+                </dd>
+                <dt><span>Profile Pic</span></dt>
+                <dd>
+                    <div *ngIf="usuario.profilePic">
+                        <a (click)="openFile(usuario.profilePicContentType, usuario.profilePic)">open</a>
+                        {{usuario.profilePicContentType}}, {{byteSize(usuario.profilePic)}}
+                    </div>
+                </dd>
+                <dt><span>Actividad</span></dt>
+                <dd>
+                    <span *ngFor="let actividad of usuario.actividads; let last = last">
+                        <a [routerLink]="['/actividad', actividad?.id, 'view' ]">{{actividad.id}}</a>{{last ? '' : ', '}}
+                    </span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/usuario', usuario.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

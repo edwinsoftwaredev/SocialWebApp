@@ -1,0 +1,79 @@
+{
+    "name": "Usuario",
+    "fields": [
+        {
+            "fieldName": "usuario",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "primerNombre",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "segundoNombre",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "primerApellido",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "segundoApellido",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "email",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "fechaNacimiento",
+            "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "fechaRegistro",
+            "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "profilePic",
+            "fieldType": "byte[]",
+            "fieldTypeBlobContent": "any"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "relacion",
+            "otherEntityName": "relacion",
+            "otherEntityRelationshipName": "usuario"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "post",
+            "otherEntityName": "post",
+            "otherEntityRelationshipName": "usuario"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "chat",
+            "otherEntityName": "chat",
+            "otherEntityRelationshipName": "usuario"
+        },
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityRelationshipName": "usuario",
+            "relationshipName": "actividad",
+            "otherEntityName": "actividad",
+            "otherEntityField": "id",
+            "ownerSide": true
+        }
+    ],
+    "changelogDate": "20181110225024",
+    "entityTableName": "tbl_sp_usuario",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

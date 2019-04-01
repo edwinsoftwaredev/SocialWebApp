@@ -1,0 +1,34 @@
+{
+    "name": "Relacion",
+    "fields": [
+        {
+            "fieldName": "amigoId",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "estado",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldName": "fecha",
+            "fieldType": "LocalDate"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "usuario",
+            "otherEntityName": "usuario",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20181119004244",
+    "entityTableName": "tbl_sp_rel",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

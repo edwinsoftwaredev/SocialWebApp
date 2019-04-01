@@ -1,0 +1,58 @@
+<div style="background-color: lightgrey; overflow-y: auto; position: absolute; width: 100%;">
+    <h2 id="page-heading">
+        <span>Actividads</span>
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-actividad" [routerLink]="['/actividad/new']">
+            <fa-icon [icon]="'plus'"></fa-icon>
+            <span >
+            Create new Actividad
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <br/>
+    <div class="table-responsive" *ngIf="actividads">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+            <th><span>ID</span></th>
+            <th><span>Nombre Actividad</span></th>
+            <th><span>Fecha Inicio</span></th>
+            <th><span>Fecha Fin</span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let actividad of actividads ;trackBy: trackId">
+                <td><a [routerLink]="['/actividad', actividad.id, 'view' ]">{{actividad.id}}</a></td>
+                <td>{{actividad.nombreActividad}}</td>
+                <td>{{actividad.fechaInicio | date:'mediumDate'}}</td>
+                <td>{{actividad.fechaFin | date:'mediumDate'}}</td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['/actividad', actividad.id, 'view' ]"
+                                class="btn btn-info btn-sm">
+                            <fa-icon [icon]="'eye'"></fa-icon>
+                            <span class="d-none d-md-inline">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/actividad', actividad.id, 'edit']"
+                                class="btn btn-primary btn-sm">
+                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                            <span class="d-none d-md-inline">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'actividad/'+ actividad.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <fa-icon [icon]="'times'"></fa-icon>
+                            <span class="d-none d-md-inline">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
