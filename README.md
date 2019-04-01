@@ -1,7 +1,7 @@
 # Social Web App
-Social Network App with JHipster - Angular
+Social Network App with Java - Spring - Angular (JHipster)
 
-Aplicación de red social desarrollada con JHipster - Angular, con las siguientes funcionalidades:
+Aplicación de red social con las siguientes funcionalidades:
   * Edición de perfil
   * Edición de Posts a publicar
   * Agregar perfiles como amigos mediante solicitudes de amistad
