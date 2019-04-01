@@ -1,4 +1,4 @@
-# Social Mobile App
+# Social Web App
 Social Network App with JHipster - Angular
 
 Aplicación de red social desarrollada con JHipster - Angular, con las siguientes funcionalidades:
