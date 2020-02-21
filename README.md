@@ -12,4 +12,4 @@ Aplicación de red social con las siguientes funcionalidades:
   * Reaccionar a posts
   
 Social Mobile App with NativeScript - Angular
-https://github.com/EdMagoo/SocialMobileApp/
+https://github.com/edwinsoftwaredev/SocialMobileApp/
