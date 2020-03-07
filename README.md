@@ -13,3 +13,5 @@ Aplicación de red social con las siguientes funcionalidades:
   
 Social Mobile App with NativeScript - Angular
 https://github.com/edwinsoftwaredev/SocialMobileApp/
+
+
